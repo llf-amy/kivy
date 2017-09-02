@@ -40,7 +40,7 @@ class LeapFingerEventProvider(MotionEventProvider):
     __handlers__ = {}
 
     def start(self):
-        # don't do the import at start, or teh error will be always displayed
+        # don't do the import at start, or the error will be always displayed
         # for user who don't have Leap
         global Leap, InteractionBox
         import Leap
@@ -85,7 +85,7 @@ class LeapFingerEventProvider(MotionEventProvider):
         available_uid = []
         for hand in frame.hands:
             for finger in hand.fingers:
-                #print hand.id(), finger.id(), finger.tip()
+                # print hand.id(), finger.id(), finger.tip()
                 uid = '{0}:{1}'.format(hand.id, finger.id)
                 available_uid.append(uid)
                 position = finger.tip_position

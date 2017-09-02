@@ -1,6 +1,6 @@
 '''
-Url Request
-===========
+UrlRequest
+==========
 
 .. versionadded:: 1.0.8
 
@@ -114,7 +114,7 @@ class UrlRequest(Thread):
         Parameter `ca_file` added.
         Parameter `verify` added.
 
-    .. versionchanged:: 1.9.2
+    .. versionchanged:: 1.10.0
 
         Parameters `proxy_host`, `proxy_port` and `proxy_headers` added.
 
@@ -363,7 +363,7 @@ class UrlRequest(Thread):
             else:
                 bytes_so_far, result = get_chunks()
 
-            # ensure that restults are dispatched for the last chunk,
+            # ensure that results are dispatched for the last chunk,
             # avoid trigger
             if report_progress:
                 q(('progress', resp, (bytes_so_far, total_size)))
@@ -406,6 +406,8 @@ class UrlRequest(Thread):
         if content_type is not None:
             ct = content_type.split(';')[0]
             if ct == 'application/json':
+                if isinstance(result, bytes):
+                    result = result.decode('utf-8')
                 try:
                     return loads(result)
                 except:
@@ -557,7 +559,7 @@ if __name__ == '__main__':
         pprint('Got an error:')
         pprint(error)
 
-    req = UrlRequest('http://en.wikipedia.org/w/api.php?format'
+    req = UrlRequest('https://en.wikipedia.org/w/api.php?format'
         '=json&action=query&titles=Kivy&prop=revisions&rvprop=content',
         on_success, on_error)
     while not req.is_finished:
